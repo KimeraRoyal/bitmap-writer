@@ -1,4 +1,7 @@
-﻿namespace BitmapWriter
+﻿using System;
+using System.Windows.Forms;
+
+namespace BitmapWriter
 {
     partial class BitmapWriterForm
     {
@@ -48,9 +51,9 @@
             this.lineSpacingLabel = new System.Windows.Forms.Label();
             this.characterSpacing = new System.Windows.Forms.NumericUpDown();
             this.lineSpacing = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textColourLabel = new System.Windows.Forms.Label();
+            this.textColour = new System.Windows.Forms.Panel();
+            this.textColourHex = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.fontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paddingLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paddingRight)).BeginInit();
@@ -236,40 +239,42 @@
             this.lineSpacing.Size = new System.Drawing.Size(150, 20);
             this.lineSpacing.TabIndex = 18;
             // 
-            // label1
+            // textColourLabel
             // 
-            this.label1.Location = new System.Drawing.Point(12, 174);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(105, 20);
-            this.label1.TabIndex = 20;
-            this.label1.Text = "Text Colour";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.textColourLabel.Location = new System.Drawing.Point(12, 174);
+            this.textColourLabel.Name = "textColourLabel";
+            this.textColourLabel.Size = new System.Drawing.Size(105, 20);
+            this.textColourLabel.TabIndex = 20;
+            this.textColourLabel.Text = "Text Colour";
+            this.textColourLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // panel2
+            // textColour
             // 
-            this.panel2.BackColor = System.Drawing.Color.White;
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Location = new System.Drawing.Point(176, 174);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(92, 20);
-            this.panel2.TabIndex = 21;
+            this.textColour.BackColor = System.Drawing.Color.White;
+            this.textColour.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.textColour.Location = new System.Drawing.Point(176, 174);
+            this.textColour.Name = "textColour";
+            this.textColour.Size = new System.Drawing.Size(92, 20);
+            this.textColour.TabIndex = 21;
+            this.textColour.Click += textColour_OnClick;
             // 
-            // textBox1
+            // textColourHex
             // 
-            this.textBox1.Location = new System.Drawing.Point(118, 174);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(52, 20);
-            this.textBox1.TabIndex = 22;
-            this.textBox1.Text = "#FFFFFF";
+            this.textColourHex.Location = new System.Drawing.Point(118, 174);
+            this.textColourHex.Name = "textColourHex";
+            this.textColourHex.Size = new System.Drawing.Size(52, 20);
+            this.textColourHex.TabIndex = 22;
+            this.textColourHex.Text = "#FFFFFF";
+            this.textColourHex.TextChanged += new System.EventHandler(this.textColourHex_TextChanged);
             // 
             // BitmapWriterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 336);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textColourHex);
+            this.Controls.Add(this.textColour);
+            this.Controls.Add(this.textColourLabel);
             this.Controls.Add(this.lineSpacing);
             this.Controls.Add(this.characterSpacing);
             this.Controls.Add(this.lineSpacingLabel);
@@ -302,11 +307,11 @@
             this.PerformLayout();
         }
 
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textColourHex;
 
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel textColour;
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label textColourLabel;
 
         private System.Windows.Forms.Label testLabel;
 

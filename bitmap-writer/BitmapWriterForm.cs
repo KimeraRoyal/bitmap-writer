@@ -6,8 +6,8 @@ namespace BitmapWriter
 {
     public partial class BitmapWriterForm : Form
     {
-        private ColorDialog m_colorDialog;
         private FontSelector m_fontSelector;
+        private ColorSelector m_fontColorSelector;
         
         private FontFamily m_lastFont;
         private int m_fontSize = 12;
@@ -17,6 +17,10 @@ namespace BitmapWriter
             InitializeComponent();
             
             m_fontSelector = new FontSelector();
+            
+            m_fontColorSelector = new ColorSelector();
+            m_fontColorSelector.OnColorUpdated += OnFontColorUpdated;
+            m_fontColorSelector.OnHexUpdated += OnFontColorHexUpdated;
         }
 
         private void loadFontButton_Click(object sender, EventArgs e)
@@ -43,6 +47,26 @@ namespace BitmapWriter
                 label = $"Current Font: {m_lastFont.Name}\nFont Size: {m_fontSize}";
             }
             testLabel.Text = label;
+        }
+
+        private void textColourHex_TextChanged(object sender, EventArgs e)
+        {
+            m_fontColorSelector.Hex = textColourHex.Text;
+        }
+
+        private void textColour_OnClick(object _sender, EventArgs _e)
+        {
+            m_fontColorSelector.SelectColour();
+        }
+
+        private void OnFontColorUpdated(Color _color)
+        {
+            textColour.BackColor = _color;
+        }
+
+        private void OnFontColorHexUpdated(string _obj)
+        {
+            textColourHex.Text = m_fontColorSelector.Hex;
         }
     }
 }

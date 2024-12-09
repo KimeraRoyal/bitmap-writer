@@ -46,6 +46,7 @@
         <Reference Include="System.Xml"/>
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="ColorSelector.cs" />
         <Compile Include="FontSelector.cs" />
         <Compile Include="BitmapWriterForm.cs">
             <SubType>Form</SubType>
