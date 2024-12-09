@@ -1,6 +1,6 @@
 ﻿namespace BitmapWriter
 {
-    partial class Form1
+    partial class BitmapWriterForm
     {
         /// <summary>
         /// Required designer variable.
@@ -32,31 +32,56 @@
             this.userInput = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.loadFontButton = new System.Windows.Forms.Button();
+            this.testLabel = new System.Windows.Forms.Label();
+            this.fontSize = new System.Windows.Forms.NumericUpDown();
+            this.fontSizeLabel = new System.Windows.Forms.Label();
+            this.paddingLabel = new System.Windows.Forms.Label();
+            this.paddingLeft = new System.Windows.Forms.NumericUpDown();
+            this.paddingRight = new System.Windows.Forms.NumericUpDown();
+            this.paddingLeftLabel = new System.Windows.Forms.Label();
+            this.paddingRightLabel = new System.Windows.Forms.Label();
+            this.paddingBottomLabel = new System.Windows.Forms.Label();
+            this.paddingTopLabel = new System.Windows.Forms.Label();
+            this.paddingBottom = new System.Windows.Forms.NumericUpDown();
+            this.paddingTop = new System.Windows.Forms.NumericUpDown();
+            this.characterSpacingLabel = new System.Windows.Forms.Label();
+            this.lineSpacingLabel = new System.Windows.Forms.Label();
+            this.characterSpacing = new System.Windows.Forms.NumericUpDown();
+            this.lineSpacing = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.fontSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingLeft)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingRight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingBottom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingTop)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.characterSpacing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lineSpacing)).BeginInit();
             this.SuspendLayout();
             // 
             // userInput
             // 
             this.userInput.AccessibleDescription = "Text entered in this field will be used to generate the sprite.";
             this.userInput.AccessibleName = "User Input";
-            this.userInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.userInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userInput.Location = new System.Drawing.Point(12, 274);
+            this.userInput.Location = new System.Drawing.Point(316, 9);
             this.userInput.Name = "userInput";
-            this.userInput.Size = new System.Drawing.Size(279, 75);
+            this.userInput.Size = new System.Drawing.Size(256, 101);
             this.userInput.TabIndex = 0;
             this.userInput.Text = "Insert text";
             // 
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Location = new System.Drawing.Point(316, 12);
+            this.panel1.Location = new System.Drawing.Point(316, 129);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(256, 128);
+            this.panel1.Size = new System.Drawing.Size(75, 39);
             this.panel1.TabIndex = 1;
             // 
             // loadFontButton
             // 
-            this.loadFontButton.Location = new System.Drawing.Point(12, 239);
+            this.loadFontButton.Location = new System.Drawing.Point(12, 113);
             this.loadFontButton.Name = "loadFontButton";
             this.loadFontButton.Size = new System.Drawing.Size(99, 29);
             this.loadFontButton.TabIndex = 2;
@@ -64,20 +89,253 @@
             this.loadFontButton.UseVisualStyleBackColor = true;
             this.loadFontButton.Click += new System.EventHandler(this.loadFontButton_Click);
             // 
-            // Form1
+            // testLabel
+            // 
+            this.testLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.testLabel.Location = new System.Drawing.Point(12, 9);
+            this.testLabel.Name = "testLabel";
+            this.testLabel.Size = new System.Drawing.Size(256, 101);
+            this.testLabel.TabIndex = 3;
+            this.testLabel.Text = "No Font Loaded";
+            this.testLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // fontSize
+            // 
+            this.fontSize.Location = new System.Drawing.Point(118, 148);
+            this.fontSize.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            this.fontSize.Name = "fontSize";
+            this.fontSize.Size = new System.Drawing.Size(150, 20);
+            this.fontSize.TabIndex = 4;
+            this.fontSize.Value = new decimal(new int[] { 12, 0, 0, 0 });
+            this.fontSize.ValueChanged += new System.EventHandler(this.fontSize_ValueChanged);
+            // 
+            // fontSizeLabel
+            // 
+            this.fontSizeLabel.Location = new System.Drawing.Point(12, 148);
+            this.fontSizeLabel.Name = "fontSizeLabel";
+            this.fontSizeLabel.Size = new System.Drawing.Size(105, 20);
+            this.fontSizeLabel.TabIndex = 5;
+            this.fontSizeLabel.Text = "Font Size";
+            this.fontSizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // paddingLabel
+            // 
+            this.paddingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingLabel.Location = new System.Drawing.Point(12, 229);
+            this.paddingLabel.Name = "paddingLabel";
+            this.paddingLabel.Size = new System.Drawing.Size(105, 20);
+            this.paddingLabel.TabIndex = 6;
+            this.paddingLabel.Text = "Padding";
+            this.paddingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // paddingLeft
+            // 
+            this.paddingLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingLeft.Location = new System.Drawing.Point(140, 229);
+            this.paddingLeft.Name = "paddingLeft";
+            this.paddingLeft.Size = new System.Drawing.Size(53, 20);
+            this.paddingLeft.TabIndex = 7;
+            // 
+            // paddingRight
+            // 
+            this.paddingRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingRight.Location = new System.Drawing.Point(140, 255);
+            this.paddingRight.Name = "paddingRight";
+            this.paddingRight.Size = new System.Drawing.Size(53, 20);
+            this.paddingRight.TabIndex = 8;
+            // 
+            // paddingLeftLabel
+            // 
+            this.paddingLeftLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingLeftLabel.Location = new System.Drawing.Point(118, 229);
+            this.paddingLeftLabel.Name = "paddingLeftLabel";
+            this.paddingLeftLabel.Size = new System.Drawing.Size(16, 20);
+            this.paddingLeftLabel.TabIndex = 9;
+            this.paddingLeftLabel.Text = "L";
+            this.paddingLeftLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paddingRightLabel
+            // 
+            this.paddingRightLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingRightLabel.Location = new System.Drawing.Point(118, 255);
+            this.paddingRightLabel.Name = "paddingRightLabel";
+            this.paddingRightLabel.Size = new System.Drawing.Size(16, 20);
+            this.paddingRightLabel.TabIndex = 10;
+            this.paddingRightLabel.Text = "R";
+            this.paddingRightLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paddingBottomLabel
+            // 
+            this.paddingBottomLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingBottomLabel.Location = new System.Drawing.Point(193, 255);
+            this.paddingBottomLabel.Name = "paddingBottomLabel";
+            this.paddingBottomLabel.Size = new System.Drawing.Size(16, 20);
+            this.paddingBottomLabel.TabIndex = 14;
+            this.paddingBottomLabel.Text = "B";
+            this.paddingBottomLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paddingTopLabel
+            // 
+            this.paddingTopLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingTopLabel.Location = new System.Drawing.Point(193, 229);
+            this.paddingTopLabel.Name = "paddingTopLabel";
+            this.paddingTopLabel.Size = new System.Drawing.Size(16, 20);
+            this.paddingTopLabel.TabIndex = 13;
+            this.paddingTopLabel.Text = "T";
+            this.paddingTopLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // paddingBottom
+            // 
+            this.paddingBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingBottom.Location = new System.Drawing.Point(215, 255);
+            this.paddingBottom.Name = "paddingBottom";
+            this.paddingBottom.Size = new System.Drawing.Size(53, 20);
+            this.paddingBottom.TabIndex = 12;
+            // 
+            // paddingTop
+            // 
+            this.paddingTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.paddingTop.Location = new System.Drawing.Point(215, 229);
+            this.paddingTop.Name = "paddingTop";
+            this.paddingTop.Size = new System.Drawing.Size(53, 20);
+            this.paddingTop.TabIndex = 11;
+            // 
+            // characterSpacingLabel
+            // 
+            this.characterSpacingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.characterSpacingLabel.Location = new System.Drawing.Point(12, 281);
+            this.characterSpacingLabel.Name = "characterSpacingLabel";
+            this.characterSpacingLabel.Size = new System.Drawing.Size(105, 20);
+            this.characterSpacingLabel.TabIndex = 15;
+            this.characterSpacingLabel.Text = "Character Spacing";
+            this.characterSpacingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lineSpacingLabel
+            // 
+            this.lineSpacingLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lineSpacingLabel.Location = new System.Drawing.Point(12, 307);
+            this.lineSpacingLabel.Name = "lineSpacingLabel";
+            this.lineSpacingLabel.Size = new System.Drawing.Size(105, 20);
+            this.lineSpacingLabel.TabIndex = 16;
+            this.lineSpacingLabel.Text = "Line Spacing";
+            this.lineSpacingLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // characterSpacing
+            // 
+            this.characterSpacing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.characterSpacing.Location = new System.Drawing.Point(118, 281);
+            this.characterSpacing.Name = "characterSpacing";
+            this.characterSpacing.Size = new System.Drawing.Size(150, 20);
+            this.characterSpacing.TabIndex = 17;
+            // 
+            // lineSpacing
+            // 
+            this.lineSpacing.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lineSpacing.Location = new System.Drawing.Point(118, 307);
+            this.lineSpacing.Name = "lineSpacing";
+            this.lineSpacing.Size = new System.Drawing.Size(150, 20);
+            this.lineSpacing.TabIndex = 18;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(12, 174);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(105, 20);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Text Colour";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Location = new System.Drawing.Point(176, 174);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(92, 20);
+            this.panel2.TabIndex = 21;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(118, 174);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(52, 20);
+            this.textBox1.TabIndex = 22;
+            this.textBox1.Text = "#FFFFFF";
+            // 
+            // BitmapWriterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 361);
+            this.ClientSize = new System.Drawing.Size(584, 336);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lineSpacing);
+            this.Controls.Add(this.characterSpacing);
+            this.Controls.Add(this.lineSpacingLabel);
+            this.Controls.Add(this.characterSpacingLabel);
+            this.Controls.Add(this.paddingBottomLabel);
+            this.Controls.Add(this.paddingTopLabel);
+            this.Controls.Add(this.paddingBottom);
+            this.Controls.Add(this.paddingTop);
+            this.Controls.Add(this.paddingRightLabel);
+            this.Controls.Add(this.paddingLeftLabel);
+            this.Controls.Add(this.paddingRight);
+            this.Controls.Add(this.paddingLeft);
+            this.Controls.Add(this.paddingLabel);
+            this.Controls.Add(this.fontSizeLabel);
+            this.Controls.Add(this.fontSize);
+            this.Controls.Add(this.testLabel);
             this.Controls.Add(this.loadFontButton);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.userInput);
-            this.Name = "Form1";
+            this.Name = "BitmapWriterForm";
             this.Text = "Bitmap Writer";
+            ((System.ComponentModel.ISupportInitialize)(this.fontSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingLeft)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingRight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingBottom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.paddingTop)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.characterSpacing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lineSpacing)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
+        private System.Windows.Forms.TextBox textBox1;
+
+        private System.Windows.Forms.Panel panel2;
+
+        private System.Windows.Forms.Label label1;
+
+        private System.Windows.Forms.Label testLabel;
+
         private System.Windows.Forms.Button loadFontButton;
+        
+        private System.Windows.Forms.NumericUpDown fontSize;
+        private System.Windows.Forms.Label fontSizeLabel;
+
+        private System.Windows.Forms.Label characterSpacingLabel;
+        private System.Windows.Forms.NumericUpDown characterSpacing;
+        
+        private System.Windows.Forms.Label lineSpacingLabel;
+        private System.Windows.Forms.NumericUpDown lineSpacing;
+
+        // <!-- Padding
+        private System.Windows.Forms.Label paddingLabel;
+        
+        private System.Windows.Forms.NumericUpDown paddingLeft;
+        private System.Windows.Forms.Label paddingLeftLabel;
+        
+        private System.Windows.Forms.NumericUpDown paddingRight;
+        private System.Windows.Forms.Label paddingRightLabel;
+        
+        private System.Windows.Forms.NumericUpDown paddingTop;
+        private System.Windows.Forms.Label paddingTopLabel;
+        
+        private System.Windows.Forms.NumericUpDown paddingBottom;
+        private System.Windows.Forms.Label paddingBottomLabel;
+        // Padding -->
 
         private System.Windows.Forms.Panel panel1;
 
