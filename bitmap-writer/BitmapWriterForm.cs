@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BitmapWriter
 {
     public partial class BitmapWriterForm : Form
     {
-        private Bitmap m_bitmap;
+        private Bitmap m_preview;
+        private Bitmap m_output;
         
         private FontFamilySelector m_fontFamilySelector;
         private ColorSelector m_fontColorSelector;
@@ -21,16 +24,14 @@ namespace BitmapWriter
         private int m_fontSize = 12;
 
         private int m_paddingLeft, m_paddingRight, m_paddingTop, m_paddingBottom;
-        private int m_characterSpacing;
-        private int m_lineSpacing;
         
         public BitmapWriterForm()
         {
             InitializeComponent();
 
-            m_bitmap = new Bitmap(1, 1);
+            m_preview = new Bitmap(1, 1);
             
-            m_fontFamilySelector = new FontFamilySelector();
+            m_fontFamilySelector = new FontFamilySelector(fontResults);
             
             m_fontColorSelector = new ColorSelector();
             m_fontColorSelector.OnColorUpdated += OnFontColorUpdated;
@@ -55,37 +56,49 @@ namespace BitmapWriter
             testLabel.Text = label;
         }
 
-        private void DrawBitmap(Color _backgroundColor)
+        private void UpdatePreview()
         {
-            if(m_bitmap == null || m_bitmap.Height < m_fontSize) { return; }
+            DrawToBitmap(m_preview, GetBackgroundColor());
+            preview.Image = m_preview;
+        }
 
-            var graphics = GetFontGraphics(m_bitmap);
+        private void DrawToBitmap(Bitmap _target, Color _backgroundColor)
+        {
+            if(m_font == null || _target == null || _target.Height < 1) { return; }
+
+            var graphics = GetFontGraphics(_target);
             
             graphics.Clear(_backgroundColor);
             var rect = new Rectangle(
                 m_paddingLeft,
                 m_paddingTop,
-                m_bitmap.Width - m_paddingLeft - m_paddingRight,
-                m_bitmap.Height - m_paddingTop - m_paddingBottom);
+                _target.Width - m_paddingLeft - m_paddingRight,
+                _target.Height - m_paddingTop - m_paddingBottom);
             graphics.DrawString(userInput.Text.Trim(), m_font, new SolidBrush(m_fontColorSelector.Color), rect);
             
             graphics.Flush();
-
-            preview.Image = m_bitmap;
         }
 
-        private void RegenerateBitmap()
+        private void RegenerateBitmaps()
         {
             if(m_fontFamily == null) { return; }
-            
-            var graphics = GetFontGraphics(m_bitmap);
-            var size = graphics.MeasureString(m_userInput.Text, m_font);
-            
-            m_bitmap?.Dispose();
-            m_bitmap = new Bitmap((int) size.Width + m_paddingLeft + m_paddingRight + 1, (int) size.Height + m_paddingTop + m_paddingBottom);
-            m_bitmap.MakeTransparent();
 
-            DrawBitmap(GetBackgroundColor());
+            var size = GetTextSize();
+            
+            m_preview?.Dispose();
+            m_preview = new Bitmap(size.Width, size.Height);
+            UpdatePreview();
+            
+            m_output?.Dispose();
+            m_output = new Bitmap(size.Width, size.Height);
+            m_output.MakeTransparent();
+        }
+
+        private Size GetTextSize()
+        {
+            var graphics = GetFontGraphics(m_preview);
+            var size = graphics.MeasureString(m_userInput.Text, m_font);
+            return new Size((int)size.Width + m_paddingLeft + m_paddingRight + 1, (int)size.Height + m_paddingTop + m_paddingBottom);
         }
 
         private Color GetBackgroundColor()
@@ -109,7 +122,7 @@ namespace BitmapWriter
         private void OnFontColorUpdated(Color _color)
         {
             textColour.BackColor = _color;
-            DrawBitmap(GetBackgroundColor());
+            UpdatePreview();
         }
 
         private void OnFontColorHexUpdated(string _obj)
@@ -119,7 +132,7 @@ namespace BitmapWriter
 
         private void OnUserInputChanged(string _text)
         {
-            RegenerateBitmap();
+            RegenerateBitmaps();
         }
 
         private void loadFontButton_Click(object sender, EventArgs e)
@@ -131,14 +144,14 @@ namespace BitmapWriter
             m_fontFamily = fontFamily;
             
             UpdateFont();
-            RegenerateBitmap();
+            RegenerateBitmaps();
         }
 
         private void fontSize_ValueChanged(object sender, EventArgs e)
         {
             m_fontSize = (int) fontSize.Value;
             UpdateFont();
-            RegenerateBitmap();
+            RegenerateBitmaps();
         }
 
         private void textColourHex_TextChanged(object sender, EventArgs e)
@@ -154,45 +167,57 @@ namespace BitmapWriter
         private void paddingLeft_ValueChanged(object sender, EventArgs e)
         {
             m_paddingLeft = (int) paddingLeft.Value;
-            RegenerateBitmap();
+            RegenerateBitmaps();
         }
 
         private void paddingTop_ValueChanged(object sender, EventArgs e)
         {
             m_paddingTop = (int) paddingTop.Value;
-            RegenerateBitmap();
+            RegenerateBitmaps();
         }
 
         private void paddingRight_ValueChanged(object sender, EventArgs e)
         {
             m_paddingRight = (int) paddingRight.Value;
-            RegenerateBitmap();
+            RegenerateBitmaps();
         }
 
         private void paddingBottom_ValueChanged(object sender, EventArgs e)
         {
             m_paddingBottom = (int) paddingBottom.Value;
-            RegenerateBitmap();
-        }
-
-        private void characterSpacing_ValueChanged(object sender, EventArgs e)
-        {
-            m_characterSpacing = (int) characterSpacing.Value;
-        }
-
-        private void lineSpacing_ValueChanged(object sender, EventArgs e)
-        {
-            m_lineSpacing = (int) lineSpacing.Value;
+            RegenerateBitmaps();
         }
 
         private void saveImageButton_Click(object sender, EventArgs e)
         {
-            if(m_bitmap == null || m_bitmap.Height < m_fontSize) { return; }
+            if (m_font == null)
+            {
+                saveResults.Text = "Failed to save:\nNo font assigned.";
+                return;
+            }
+            if (m_output == null)
+            {
+                saveResults.Text = "Failed to save:\nInvalid output.";
+                return;
+            }
             
             var saveFileDialog = new SaveFileDialog();
-            if(saveFileDialog.ShowDialog() != DialogResult.OK) { return; }
+            var saveResult = saveFileDialog.ShowDialog();
+            if (saveResult != DialogResult.OK)
+            {
+                saveResults.Text = $"Failed to save:\nSave dialog result: {saveResult}";
+                return;
+            }
             
-            m_bitmap.Save(saveFileDialog.FileName, ImageFormat.Png);
+            DrawToBitmap(m_output, Color.Transparent);
+            m_output.Save(saveFileDialog.FileName, ImageFormat.Png);
+            saveResults.Text = $"Saved to \"{Path.GetFileName(saveFileDialog.FileName)}\"";
+        }
+
+        private void credits_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            credits.LinkVisited = true;
+            Process.Start("https://kimera.world");
         }
     }
 }
