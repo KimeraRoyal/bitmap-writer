@@ -33,7 +33,6 @@ namespace BitmapWriter
         private void InitializeComponent()
         {
             this.userInput = new System.Windows.Forms.RichTextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.loadFontButton = new System.Windows.Forms.Button();
             this.testLabel = new System.Windows.Forms.Label();
             this.fontSize = new System.Windows.Forms.NumericUpDown();
@@ -54,6 +53,8 @@ namespace BitmapWriter
             this.textColourLabel = new System.Windows.Forms.Label();
             this.textColour = new System.Windows.Forms.Panel();
             this.textColourHex = new System.Windows.Forms.TextBox();
+            this.saveImageButton = new System.Windows.Forms.Button();
+            this.preview = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.fontSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paddingLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.paddingRight)).BeginInit();
@@ -61,26 +62,21 @@ namespace BitmapWriter
             ((System.ComponentModel.ISupportInitialize)(this.paddingTop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.characterSpacing)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineSpacing)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
             this.SuspendLayout();
             // 
             // userInput
             // 
             this.userInput.AccessibleDescription = "Text entered in this field will be used to generate the sprite.";
             this.userInput.AccessibleName = "User Input";
+            this.userInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.userInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.userInput.Location = new System.Drawing.Point(316, 9);
+            this.userInput.Location = new System.Drawing.Point(311, 191);
             this.userInput.Name = "userInput";
             this.userInput.Size = new System.Drawing.Size(256, 101);
             this.userInput.TabIndex = 0;
             this.userInput.Text = "Insert text";
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Location = new System.Drawing.Point(316, 129);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(75, 39);
-            this.panel1.TabIndex = 1;
+            this.userInput.TextChanged += new System.EventHandler(this.userInput_TextChanged);
             // 
             // loadFontButton
             // 
@@ -138,6 +134,7 @@ namespace BitmapWriter
             this.paddingLeft.Name = "paddingLeft";
             this.paddingLeft.Size = new System.Drawing.Size(53, 20);
             this.paddingLeft.TabIndex = 7;
+            this.paddingLeft.ValueChanged += new System.EventHandler(this.paddingLeft_ValueChanged);
             // 
             // paddingRight
             // 
@@ -146,6 +143,7 @@ namespace BitmapWriter
             this.paddingRight.Name = "paddingRight";
             this.paddingRight.Size = new System.Drawing.Size(53, 20);
             this.paddingRight.TabIndex = 8;
+            this.paddingRight.ValueChanged += new System.EventHandler(this.paddingRight_ValueChanged);
             // 
             // paddingLeftLabel
             // 
@@ -194,6 +192,7 @@ namespace BitmapWriter
             this.paddingBottom.Name = "paddingBottom";
             this.paddingBottom.Size = new System.Drawing.Size(53, 20);
             this.paddingBottom.TabIndex = 12;
+            this.paddingBottom.ValueChanged += new System.EventHandler(this.paddingBottom_ValueChanged);
             // 
             // paddingTop
             // 
@@ -202,6 +201,7 @@ namespace BitmapWriter
             this.paddingTop.Name = "paddingTop";
             this.paddingTop.Size = new System.Drawing.Size(53, 20);
             this.paddingTop.TabIndex = 11;
+            this.paddingTop.ValueChanged += new System.EventHandler(this.paddingTop_ValueChanged);
             // 
             // characterSpacingLabel
             // 
@@ -230,6 +230,7 @@ namespace BitmapWriter
             this.characterSpacing.Name = "characterSpacing";
             this.characterSpacing.Size = new System.Drawing.Size(150, 20);
             this.characterSpacing.TabIndex = 17;
+            this.characterSpacing.ValueChanged += new System.EventHandler(this.characterSpacing_ValueChanged);
             // 
             // lineSpacing
             // 
@@ -238,6 +239,7 @@ namespace BitmapWriter
             this.lineSpacing.Name = "lineSpacing";
             this.lineSpacing.Size = new System.Drawing.Size(150, 20);
             this.lineSpacing.TabIndex = 18;
+            this.lineSpacing.ValueChanged += new System.EventHandler(this.lineSpacing_ValueChanged);
             // 
             // textColourLabel
             // 
@@ -256,7 +258,6 @@ namespace BitmapWriter
             this.textColour.Name = "textColour";
             this.textColour.Size = new System.Drawing.Size(92, 20);
             this.textColour.TabIndex = 21;
-            this.textColour.Click += textColour_OnClick;
             // 
             // textColourHex
             // 
@@ -267,11 +268,33 @@ namespace BitmapWriter
             this.textColourHex.Text = "#FFFFFF";
             this.textColourHex.TextChanged += new System.EventHandler(this.textColourHex_TextChanged);
             // 
+            // saveImageButton
+            // 
+            this.saveImageButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.saveImageButton.Location = new System.Drawing.Point(311, 298);
+            this.saveImageButton.Name = "saveImageButton";
+            this.saveImageButton.Size = new System.Drawing.Size(99, 29);
+            this.saveImageButton.TabIndex = 23;
+            this.saveImageButton.Text = "Save Image";
+            this.saveImageButton.UseVisualStyleBackColor = true;
+            this.saveImageButton.Click += new System.EventHandler(this.saveImageButton_Click);
+            // 
+            // preview
+            // 
+            this.preview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.preview.Location = new System.Drawing.Point(311, 9);
+            this.preview.Name = "preview";
+            this.preview.Size = new System.Drawing.Size(256, 176);
+            this.preview.TabIndex = 24;
+            this.preview.TabStop = false;
+            // 
             // BitmapWriterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 336);
+            this.Controls.Add(this.preview);
+            this.Controls.Add(this.saveImageButton);
             this.Controls.Add(this.textColourHex);
             this.Controls.Add(this.textColour);
             this.Controls.Add(this.textColourLabel);
@@ -292,7 +315,6 @@ namespace BitmapWriter
             this.Controls.Add(this.fontSize);
             this.Controls.Add(this.testLabel);
             this.Controls.Add(this.loadFontButton);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.userInput);
             this.Name = "BitmapWriterForm";
             this.Text = "Bitmap Writer";
@@ -303,9 +325,14 @@ namespace BitmapWriter
             ((System.ComponentModel.ISupportInitialize)(this.paddingTop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.characterSpacing)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lineSpacing)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.PictureBox preview;
+
+        private System.Windows.Forms.Button saveImageButton;
 
         private System.Windows.Forms.TextBox textColourHex;
 
@@ -341,8 +368,6 @@ namespace BitmapWriter
         private System.Windows.Forms.NumericUpDown paddingBottom;
         private System.Windows.Forms.Label paddingBottomLabel;
         // Padding -->
-
-        private System.Windows.Forms.Panel panel1;
 
         private System.Windows.Forms.RichTextBox userInput;
 
