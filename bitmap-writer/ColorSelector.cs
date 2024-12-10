@@ -38,7 +38,7 @@ namespace BitmapWriter
                 if (!m_locked)
                 {
                     m_locked = true;
-                    Color = ColorTranslator.FromHtml(m_hex);
+                    Color = m_hex.Length > 1 ? ColorTranslator.FromHtml(m_hex) : Color.Black;
                     m_locked = false;
                 }
                 OnHexUpdated?.Invoke(m_hex);

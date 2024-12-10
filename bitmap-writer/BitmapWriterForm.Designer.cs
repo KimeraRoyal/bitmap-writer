@@ -76,7 +76,6 @@ namespace BitmapWriter
             this.userInput.Size = new System.Drawing.Size(256, 101);
             this.userInput.TabIndex = 0;
             this.userInput.Text = "Insert text";
-            this.userInput.TextChanged += new System.EventHandler(this.userInput_TextChanged);
             // 
             // loadFontButton
             // 

@@ -6,14 +6,14 @@ using System.Windows.Forms;
 
 namespace BitmapWriter
 {
-    public class FontSelector
+    public class FontFamilySelector
     {
         private readonly OpenFileDialog m_loadFontDialog;
         
         private readonly PrivateFontCollection m_fontCollection;
         private readonly Dictionary<string, string> m_fontNameLookup;
 
-        public FontSelector()
+        public FontFamilySelector()
         {
             m_loadFontDialog = new OpenFileDialog()
             {

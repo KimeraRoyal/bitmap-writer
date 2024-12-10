@@ -11,12 +11,10 @@ namespace BitmapWriter
     {
         private Bitmap m_bitmap;
         
-        private FontSelector m_fontSelector;
+        private FontFamilySelector m_fontFamilySelector;
         private ColorSelector m_fontColorSelector;
 
-        private string m_input;
-        private int m_maxLineLength;
-        private int m_lineCount;
+        private UserInput m_userInput;
         
         private FontFamily m_fontFamily;
         private Font m_font;
@@ -32,20 +30,101 @@ namespace BitmapWriter
 
             m_bitmap = new Bitmap(1, 1);
             
-            m_fontSelector = new FontSelector();
+            m_fontFamilySelector = new FontFamilySelector();
             
             m_fontColorSelector = new ColorSelector();
             m_fontColorSelector.OnColorUpdated += OnFontColorUpdated;
             m_fontColorSelector.OnHexUpdated += OnFontColorHexUpdated;
             m_fontColorSelector.Color = Color.White;
+
+            textColour.Click += textColour_OnClick;
+
+            m_userInput = new UserInput(userInput);
+            m_userInput.OnTextChanged += OnUserInputChanged;
+        }
+
+        private void UpdateFont()
+        {
+            var label = "No Font Loaded";
+            if (m_fontFamily != null)
+            {
+                m_font = new Font(m_fontFamily, m_fontSize, FontStyle.Regular, GraphicsUnit.Pixel, 0);
+                testLabel.Font = m_font;
+                label = $"Current Font: {m_fontFamily.Name}\nFont Size: {m_fontSize}";
+            }
+            testLabel.Text = label;
+        }
+
+        private void DrawBitmap(Color _backgroundColor)
+        {
+            if(m_bitmap == null || m_bitmap.Height < m_fontSize) { return; }
+
+            var graphics = GetFontGraphics(m_bitmap);
             
-            m_input = userInput.Text;
-            CountCharacters();
+            graphics.Clear(_backgroundColor);
+            var rect = new Rectangle(
+                m_paddingLeft,
+                m_paddingTop,
+                m_bitmap.Width - m_paddingLeft - m_paddingRight,
+                m_bitmap.Height - m_paddingTop - m_paddingBottom);
+            graphics.DrawString(userInput.Text.Trim(), m_font, new SolidBrush(m_fontColorSelector.Color), rect);
+            
+            graphics.Flush();
+
+            preview.Image = m_bitmap;
+        }
+
+        private void RegenerateBitmap()
+        {
+            if(m_fontFamily == null) { return; }
+            
+            var graphics = GetFontGraphics(m_bitmap);
+            var size = graphics.MeasureString(m_userInput.Text, m_font);
+            
+            m_bitmap?.Dispose();
+            m_bitmap = new Bitmap((int) size.Width + m_paddingLeft + m_paddingRight + 1, (int) size.Height + m_paddingTop + m_paddingBottom);
+            m_bitmap.MakeTransparent();
+
+            DrawBitmap(GetBackgroundColor());
+        }
+
+        private Color GetBackgroundColor()
+        {
+            var average = (m_fontColorSelector.Color.R + m_fontColorSelector.Color.G + m_fontColorSelector.Color.B) / 3;
+            return average >= 128 ? Color.Black: Color.White;
+        }
+
+        private static Graphics GetFontGraphics(Bitmap _bitmap)
+        {
+            var graphics = Graphics.FromImage(_bitmap);
+
+            graphics.SmoothingMode = SmoothingMode.None;
+            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
+            graphics.PixelOffsetMode = PixelOffsetMode.None;
+            graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixel;
+
+            return graphics;
+        }
+
+        private void OnFontColorUpdated(Color _color)
+        {
+            textColour.BackColor = _color;
+            DrawBitmap(GetBackgroundColor());
+        }
+
+        private void OnFontColorHexUpdated(string _obj)
+        {
+            textColourHex.Text = m_fontColorSelector.Hex;
+        }
+
+        private void OnUserInputChanged(string _text)
+        {
+            RegenerateBitmap();
         }
 
         private void loadFontButton_Click(object sender, EventArgs e)
         {
-            var fontFamily = m_fontSelector.SelectNewFont();
+            var fontFamily = m_fontFamilySelector.SelectNewFont();
             
             if (fontFamily == null) { return; }
             
@@ -62,18 +141,6 @@ namespace BitmapWriter
             RegenerateBitmap();
         }
 
-        private void UpdateFont()
-        {
-            var label = "No Font Loaded";
-            if (m_fontFamily != null)
-            {
-                m_font = new Font(m_fontFamily, m_fontSize, FontStyle.Regular, GraphicsUnit.Pixel, 0);
-                testLabel.Font = m_font;
-                label = $"Current Font: {m_fontFamily.Name}\nFont Size: {m_fontSize}";
-            }
-            testLabel.Text = label;
-        }
-
         private void textColourHex_TextChanged(object sender, EventArgs e)
         {
             m_fontColorSelector.Hex = textColourHex.Text;
@@ -82,17 +149,6 @@ namespace BitmapWriter
         private void textColour_OnClick(object _sender, EventArgs _e)
         {
             m_fontColorSelector.SelectColour();
-        }
-
-        private void OnFontColorUpdated(Color _color)
-        {
-            textColour.BackColor = _color;
-            DrawBitmap();
-        }
-
-        private void OnFontColorHexUpdated(string _obj)
-        {
-            textColourHex.Text = m_fontColorSelector.Hex;
         }
 
         private void paddingLeft_ValueChanged(object sender, EventArgs e)
@@ -127,87 +183,6 @@ namespace BitmapWriter
         private void lineSpacing_ValueChanged(object sender, EventArgs e)
         {
             m_lineSpacing = (int) lineSpacing.Value;
-        }
-
-        private void userInput_TextChanged(object sender, EventArgs e)
-        {
-            m_input = userInput.Text;
-
-            CountCharacters();
-            DrawBitmap();
-        }
-
-        private void DrawBitmap()
-        {
-            if(m_bitmap == null || m_bitmap.Height < m_fontSize) { return; }
-
-            var graphics = GetFontGraphics(m_bitmap);
-            
-            graphics.Clear(Color.Transparent);
-            var rect = new Rectangle(
-                m_paddingLeft,
-                m_paddingTop,
-                m_bitmap.Width - m_paddingLeft - m_paddingRight,
-                m_bitmap.Height - m_paddingTop - m_paddingBottom);
-            graphics.DrawString(userInput.Text, m_font, new SolidBrush(m_fontColorSelector.Color), rect);
-            
-            graphics.Flush();
-
-            preview.Image = m_bitmap;
-        }
-
-        private void CountCharacters()
-        {
-            var previousLineCount = m_lineCount;
-            var previousMaxLineLength = m_maxLineLength;
-
-            m_lineCount = 1;
-            m_maxLineLength = 0;
-            var lineLength = 0;
-            
-            foreach (var character in m_input)
-            {
-                if (character == '\n')
-                {
-                    m_maxLineLength = Math.Max(m_maxLineLength, lineLength);
-                    m_lineCount++;
-                    
-                    continue;
-                }
-                lineLength++;
-            }
-            m_maxLineLength = Math.Max(m_maxLineLength, lineLength);
-
-            if (m_lineCount != previousLineCount || m_maxLineLength != previousMaxLineLength)
-            {
-                RegenerateBitmap();
-            }
-        }
-
-        private void RegenerateBitmap()
-        {
-            if(m_fontFamily == null) { return; }
-            
-            var graphics = GetFontGraphics(m_bitmap);
-            var width = (int) graphics.MeasureString(m_input, m_font).Width;
-            
-            m_bitmap?.Dispose();
-            m_bitmap = new Bitmap(width + m_paddingLeft + m_paddingRight + 1, m_fontSize * m_lineCount + m_paddingTop + m_paddingBottom);
-            m_bitmap.MakeTransparent();
-
-            DrawBitmap();
-        }
-
-        private static Graphics GetFontGraphics(Bitmap _bitmap)
-        {
-            var graphics = Graphics.FromImage(_bitmap);
-
-            graphics.SmoothingMode = SmoothingMode.None;
-            graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-            graphics.PixelOffsetMode = PixelOffsetMode.None;
-            graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixel;
-
-            return graphics;
         }
 
         private void saveImageButton_Click(object sender, EventArgs e)
