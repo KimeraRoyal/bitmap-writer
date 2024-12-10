@@ -1,6 +1,6 @@
 ![bitmap-writer](logo.png)
 
-This tool is used to generate PNG images using bitmap fonts. This is specifically useful for displaying bitmap fonts on web, as browsers have unavoidable settings that destroy  the quality of these fonts.
+This tool is used to generate PNG images using bitmap fonts. This is specifically useful for displaying bitmap fonts on web, as browsers have unavoidable settings that destroy their quality.
 
 ![An image showcasing the program's UI](demo.png)
 
