@@ -131,6 +131,8 @@ namespace BitmapWriter
             // 
             this.paddingLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.paddingLeft.Location = new System.Drawing.Point(140, 225);
+            this.paddingLeft.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            this.paddingLeft.Minimum = new decimal(new int[] { 999, 0, 0, -2147483648 });
             this.paddingLeft.Name = "paddingLeft";
             this.paddingLeft.Size = new System.Drawing.Size(53, 20);
             this.paddingLeft.TabIndex = 7;
@@ -140,6 +142,8 @@ namespace BitmapWriter
             // 
             this.paddingRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.paddingRight.Location = new System.Drawing.Point(140, 251);
+            this.paddingRight.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            this.paddingRight.Minimum = new decimal(new int[] { 999, 0, 0, -2147483648 });
             this.paddingRight.Name = "paddingRight";
             this.paddingRight.Size = new System.Drawing.Size(53, 20);
             this.paddingRight.TabIndex = 8;
@@ -189,6 +193,8 @@ namespace BitmapWriter
             // 
             this.paddingBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.paddingBottom.Location = new System.Drawing.Point(215, 251);
+            this.paddingBottom.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            this.paddingBottom.Minimum = new decimal(new int[] { 999, 0, 0, -2147483648 });
             this.paddingBottom.Name = "paddingBottom";
             this.paddingBottom.Size = new System.Drawing.Size(53, 20);
             this.paddingBottom.TabIndex = 12;
@@ -198,6 +204,8 @@ namespace BitmapWriter
             // 
             this.paddingTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.paddingTop.Location = new System.Drawing.Point(215, 225);
+            this.paddingTop.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            this.paddingTop.Minimum = new decimal(new int[] { 999, 0, 0, -2147483648 });
             this.paddingTop.Name = "paddingTop";
             this.paddingTop.Size = new System.Drawing.Size(53, 20);
             this.paddingTop.TabIndex = 11;
@@ -283,7 +291,7 @@ namespace BitmapWriter
             this.credits.Size = new System.Drawing.Size(256, 78);
             this.credits.TabIndex = 28;
             this.credits.TabStop = true;
-            this.credits.Text = "bitmap-writer (2024)\r\nCreated by Kimera Royal (https://kimera.world)\r\nSource avai" + "lable on Github, CC Copyleft";
+            this.credits.Text = "bitmap-writer (2024)\r\nCreated by Kimera Royal (https://kimera.world)\r\nSource avai" + "lable on GitHub, CC Copyleft";
             this.credits.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.credits.UseCompatibleTextRendering = true;
             this.credits.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.credits_LinkClicked);

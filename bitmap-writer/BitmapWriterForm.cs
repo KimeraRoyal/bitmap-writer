@@ -98,7 +98,10 @@ namespace BitmapWriter
         {
             var graphics = GetFontGraphics(m_preview);
             var size = graphics.MeasureString(m_userInput.Text, m_font);
-            return new Size((int)size.Width + m_paddingLeft + m_paddingRight + 1, (int)size.Height + m_paddingTop + m_paddingBottom);
+            var width = Math.Max(1, (int)size.Width + m_paddingLeft + m_paddingRight + 1);
+            var height = Math.Max(1, (int)size.Height + m_paddingTop + m_paddingBottom);
+            
+            return new Size(width, height);
         }
 
         private Color GetBackgroundColor()
